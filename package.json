@@ -11,6 +11,7 @@
     "dependencies": {
         "@clerk/nextjs": "^4.29.5",
         "@clerk/themes": "^1.7.9",
+        "@prisma/client": "^5.9.1",
         "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-alert-dialog": "^1.0.5",
         "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -40,7 +41,6 @@
         "@radix-ui/react-tooltip": "^1.0.7",
         "@uploadthing/react": "^6.2.2",
         "class-variance-authority": "^0.7.0",
-        "clsx": "^2.1.0",
         "lucide-react": "^0.321.0",
         "next": "^14.1.0",
         "next-themes": "^0.2.1",
@@ -57,6 +57,7 @@
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "autoprefixer": "^10.0.1",
+        "clsx": "^2.1.0",
         "eslint": "^8",
         "eslint-config-next": "14.1.0",
         "postcss": "^8",
