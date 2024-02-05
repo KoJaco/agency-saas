@@ -52,6 +52,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FileUpload from "../global/file-upload";
 import Loading from "../global/loading";
+import clsx from "clsx";
 
 type Props = {
     data?: Partial<Agency>; // we don't need to pass in the full Agency object.
@@ -193,7 +194,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(handleSubmit)}
-                            className="space-y-4"
+                            className="space-y-6"
                         >
                             <FormField
                                 disabled={isLoading}
@@ -277,7 +278,14 @@ const AgencyDetails = ({ data }: Props) => {
                                 name="whiteLabel"
                                 render={({ field }) => {
                                     return (
-                                        <FormItem className="flex flex-row items-center justify-between rounded-lg border gap-4 p-4">
+                                        <FormItem
+                                            className={clsx(
+                                                "flex flex-row items-center justify-between rounded-lg border gap-4 p-4 transition-opacity duration-300",
+                                                field.value
+                                                    ? "opacity-100 bg-background"
+                                                    : "opacity-50"
+                                            )}
+                                        >
                                             <div>
                                                 <FormLabel>
                                                     Whitelabel Agency

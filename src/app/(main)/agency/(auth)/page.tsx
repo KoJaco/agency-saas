@@ -60,7 +60,7 @@ const page = async ({
 
     return (
         <div className="flex justify-center items-center mt-4">
-            <div className="max-w-[850px] border-[1px] p-4 rounded-sm">
+            <div className="max-w-[850px] p-4 rounded-sm">
                 <h1 className="text-2xl mb-6">Create an agency</h1>
                 <AgencyDetails
                     data={{
