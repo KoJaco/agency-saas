@@ -12,6 +12,8 @@ const Sidebar = async ({ id, type }: SidebarProps) => {
 
     if (!user) return null;
 
+    console.log(user?.Agency);
+
     if (!user.Agency) return;
 
     const details =
@@ -52,6 +54,7 @@ const Sidebar = async ({ id, type }: SidebarProps) => {
     return (
         <>
             <MenuOptions
+                defaultOpen={true}
                 details={details}
                 subAccounts={subaccounts}
                 sidebarOpt={sidebarOpt}

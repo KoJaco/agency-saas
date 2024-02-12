@@ -29,6 +29,7 @@ import CustomModal from "../global/custom-modal";
 // import SubAccountDetails from "../forms/subaccount-details";
 import { Separator } from "../ui/separator";
 import { icons } from "@/lib/constants";
+import { MoveRight } from "lucide-react";
 
 type MenuOptionsProps = {
     defaultOpen?: boolean;
@@ -47,7 +48,7 @@ const MenuOptions = ({
     sidebarLogo,
     sidebarOpt,
     subAccounts,
-    defaultOpen = true,
+    defaultOpen,
 }: MenuOptionsProps) => {
     const { setOpen } = useModal();
     const [isMounted, setIsMounted] = useState(false);
@@ -85,7 +86,7 @@ const MenuOptions = ({
                     }
                 )}
             >
-                <div>
+                <div className="flex flex-col">
                     <AspectRatio ratio={16 / 5}>
                         <Image
                             src={sidebarLogo}
@@ -117,7 +118,7 @@ const MenuOptions = ({
                                 </div>
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-80 h-80 mt-4 z-[200]">
+                        <PopoverContent className="w-[300px] h-96 mt-4 z-[200]">
                             <Command className="rounded-lg">
                                 <CommandInput placeholder="Search Accounts..." />
                                 <CommandList className="pb-16">
@@ -129,7 +130,7 @@ const MenuOptions = ({
                                         user?.role === "AGENCY_ADMIN") &&
                                         user?.Agency && (
                                             <CommandGroup heading="Agency">
-                                                <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
+                                                <CommandItem className="!bg-transparent my-2 text-primary border-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
                                                     {defaultOpen ? (
                                                         <Link
                                                             href={`/agency/${user?.Agency?.id}`}
@@ -297,12 +298,12 @@ const MenuOptions = ({
                         MENU LINKS
                     </p>
                     <Separator className="mb-4" />
-                    <nav className="relative">
-                        <Command className="rounded-lg overflow-visible bg-transparent">
+                    <nav className="relative flex flex-col w-[250px] overflow-y-hidden">
+                        <Command className="rounded-sm bg-transparent">
                             <CommandInput placeholder="Search..." />
-                            <CommandList className="py-4 overflow-visible">
+                            <CommandList className="py-4 overflow-y-hidden">
                                 <CommandEmpty>No Results Found</CommandEmpty>
-                                <CommandGroup className="overflow-visible">
+                                <CommandGroup className="w-full flex flex-col gap-y-2">
                                     {sidebarOpt.map((sidebarOptions) => {
                                         let val;
                                         const result = icons.find(
@@ -316,16 +317,17 @@ const MenuOptions = ({
                                         return (
                                             <CommandItem
                                                 key={sidebarOptions.id}
-                                                className="md:w-[320px] w-full"
+                                                className="md:w-[250px] w-full"
                                             >
                                                 <Link
                                                     href={sidebarOptions.link}
-                                                    className="flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]"
+                                                    className="flex items-center gap-3 py-1 hover:bg-transparent text-foreground rounded-sm transition-all md:w-full w-[300px] group"
                                                 >
                                                     {val}
                                                     <span>
                                                         {sidebarOptions.name}
                                                     </span>
+                                                    <MoveRight className="ml-auto w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                                 </Link>
                                             </CommandItem>
                                         );
