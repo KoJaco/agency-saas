@@ -96,53 +96,84 @@ const AgencyDetails = ({ data }: Props) => {
             agencyLogo: data?.agencyLogo,
         },
     });
+
     const isLoading = form.formState.isSubmitting;
 
+    // useEffect(() => {
+    //     if (data) {
+    //         form.reset(data);
+    //     }
+    // }, [data]);
+
     // functions
+
+    async function handleDeleteAgency() {
+        if (!data?.id) return;
+
+        setDeletingAgency(true);
+        // TODO: Discontinue the subscription
+
+        try {
+            const response = await deleteAgency(data.id);
+            toast({
+                title: "Deleted Agency",
+                description: "Deleted your agency and all subaccounts",
+            });
+            router.refresh();
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: "destructive",
+                title: "Oppse!",
+                description: "could not delete your agency ",
+            });
+        }
+        setDeletingAgency(false);
+    }
+
     async function handleSubmit(values: z.infer<typeof FormSchema>) {
         try {
             let newUserData;
             let custId;
             if (!data?.id) {
-                const bodyData = {
-                    email: values.companyEmail,
-                    name: values.name,
-                    shipping: {
-                        address: {
-                            city: values.city,
-                            country: values.country,
-                            line1: values.address,
-                            postal_code: values.zipCode,
-                            state: values.zipCode,
-                        },
-                        name: values.name,
-                    },
-                    address: {
-                        city: values.city,
-                        country: values.country,
-                        line1: values.address,
-                        postal_code: values.zipCode,
-                        state: values.zipCode,
-                    },
-                };
-
-                const customerResponse = await fetch(
-                    "/api/stripe/create-customer",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(bodyData),
-                    }
-                );
-                const customerData: { customerId: string } =
-                    await customerResponse.json();
-                custId = customerData.customerId;
+                // const bodyData = {
+                //     email: values.companyEmail,
+                //     name: values.name,
+                //     shipping: {
+                //         address: {
+                //             city: values.city,
+                //             country: values.country,
+                //             line1: values.address,
+                //             postal_code: values.zipCode,
+                //             state: values.zipCode,
+                //         },
+                //         name: values.name,
+                //     },
+                //     address: {
+                //         city: values.city,
+                //         country: values.country,
+                //         line1: values.address,
+                //         postal_code: values.zipCode,
+                //         state: values.zipCode,
+                //     },
+                // };
+                // const customerResponse = await fetch(
+                //     "/api/stripe/create-customer",
+                //     {
+                //         method: "POST",
+                //         headers: {
+                //             "Content-Type": "application/json",
+                //         },
+                //         body: JSON.stringify(bodyData),
+                //     }
+                // );
+                // const customerData: { customerId: string } =
+                //     await customerResponse.json();
+                // custId = customerData.customerId;
             }
 
             newUserData = await initUser({ role: "AGENCY_OWNER" });
-            if (!data?.customerId && !custId) return;
+            // if (!data?.customerId && !custId) return;
 
             const response = await upsertAgency({
                 id: data?.id ? data.id : v4(),
@@ -165,6 +196,7 @@ const AgencyDetails = ({ data }: Props) => {
             toast({
                 title: "Created Agency",
             });
+            console.log(response);
             if (data?.id) return router.refresh();
             if (response) {
                 return router.refresh();
@@ -173,7 +205,7 @@ const AgencyDetails = ({ data }: Props) => {
             console.log(error);
             toast({
                 variant: "destructive",
-                title: "Oppse!",
+                title: "Oops!",
                 description: "could not create your agency",
             });
         }
@@ -405,7 +437,8 @@ const AgencyDetails = ({ data }: Props) => {
                                     <FormDescription>
                                         ✨ Create a goal for your agency. As
                                         your business grows your goals grow too
-                                        so dont forget to set the bar higher!
+                                        so don&&apos;t forget to set the bar
+                                        higher!
                                     </FormDescription>
                                     <NumberInput
                                         defaultValue={data?.goal}
@@ -436,6 +469,51 @@ const AgencyDetails = ({ data }: Props) => {
                             </Button>
                         </form>
                     </Form>
+
+                    {data?.id && (
+                        // TODO: Add acknowledge check between allowing delete agency
+                        <div className="flex flex-col items-start justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
+                            <div>Danger!</div>
+                            <div className="text-muted-foreground">
+                                Deleting your agency cannpt be undone. This will
+                                also delete all sub accounts and all data
+                                related to your sub accounts. Sub accounts will
+                                no longer have access to funnels, contacts etc.
+                            </div>
+                            <AlertDialogTrigger
+                                disabled={isLoading || deletingAgency}
+                                className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
+                            >
+                                {deletingAgency
+                                    ? "Deleting..."
+                                    : "Delete Agency"}
+                            </AlertDialogTrigger>
+                        </div>
+                    )}
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-left">
+                                Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="text-left">
+                                This action cannot be undone. This will
+                                permanently delete the Agency account and all
+                                related sub accounts.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="flex items-center">
+                            <AlertDialogCancel className="mb-2">
+                                Cancel
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                                disabled={deletingAgency}
+                                className="bg-destructive hover:bg-destructive"
+                                onClick={handleDeleteAgency}
+                            >
+                                Delete
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
 
                     {/* END FORM */}
                 </CardContent>

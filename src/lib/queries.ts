@@ -3,6 +3,7 @@ import { clerkClient, currentUser } from "@clerk/nextjs";
 import { db } from "./db";
 import { redirect } from "next/navigation";
 import { Agency, Plan, User } from "@prisma/client";
+import { CreateMediaType } from "./types";
 // server actions file
 
 export const getAuthUserDetails = async () => {
@@ -285,4 +286,100 @@ export const updateAgencyDetails = async (
         data: { ...agencyDetails },
     });
     return response;
+};
+
+export const _getTicketsWithAllRelations = async (laneId: string) => {
+    const response = await db.ticket.findMany({
+        where: { laneId: laneId },
+        include: {
+            Assigned: true,
+            Customer: true,
+            Lane: true,
+            Tags: true,
+        },
+    });
+    return response;
+};
+
+export const getFunnel = async (funnelId: string) => {
+    const funnel = await db.funnel.findUnique({
+        where: { id: funnelId },
+        include: {
+            FunnelPages: {
+                orderBy: {
+                    order: "asc",
+                },
+            },
+        },
+    });
+
+    return funnel;
+};
+
+export const getFunnels = async (subaccountId: string) => {
+    const funnels = await db.funnel.findMany({
+        where: { subAccountId: subaccountId },
+        include: { FunnelPages: true },
+    });
+
+    return funnels;
+};
+
+export const getMedia = async (subaccountId: string) => {
+    const media = await db.subAccount.findUnique({
+        where: {
+            id: subaccountId,
+        },
+        include: { Media: true },
+    });
+
+    return media;
+};
+
+export const createMedia = async (
+    subaccountId: string,
+    mediaFile: CreateMediaType
+) => {
+    const response = await db.media.create({
+        data: {
+            link: mediaFile.link,
+            name: mediaFile.name,
+            subAccountId: subaccountId,
+        },
+    });
+
+    return response;
+};
+
+export const getPipelineDetails = async (pipelineId: string) => {
+    const pipeline = await db.pipeline.findUnique({
+        where: {
+            id: pipelineId,
+        },
+    });
+
+    return pipeline;
+};
+
+// using pipelineId here
+export const getTicketsWithTags = async (pipelineId: string) => {
+    const tickets = await db.ticket.findMany({
+        where: {
+            Lane: {
+                pipelineId,
+            },
+        },
+        include: { Tags: true, Assigned: true, Customer: true },
+    });
+
+    return tickets;
+};
+
+export const getUserPermissions = async (userId: string) => {
+    const userPermissions = await db.user.findUnique({
+        where: { id: userId },
+        select: { Permissions: { include: { SubAccount: true } } },
+    });
+
+    return userPermissions;
 };

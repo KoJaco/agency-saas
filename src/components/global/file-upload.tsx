@@ -11,6 +11,8 @@ type Props = {
 };
 
 const FileUpload = ({ apiEndpoint, onChange, value }: Props) => {
+    // if we have a value return our image / pdf, else return our upload dropzone
+
     const type = value?.split(".").pop();
 
     if (value) {
