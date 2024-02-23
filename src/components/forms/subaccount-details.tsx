@@ -52,7 +52,7 @@ const formSchema = z.object({
 interface SubAccountDetailsProps {
     //To add the sub account to the agency
     agencyDetails: Agency;
-    details?: Partial<SubAccount>;
+    details?: Partial<SubAccount>; // we're going to embed this component in our settings.
     userId: string;
     userName: string;
 }
@@ -100,7 +100,11 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                 connectAccountId: "",
                 goal: 5000,
             });
+
+            // TODO: Log error
+
             if (!response) throw new Error("No response from server");
+
             await saveActivityLogsNotification({
                 agencyId: response.agencyId,
                 description: `${userName} | updated sub account | ${response.name}`,
@@ -130,7 +134,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
     }, [details]);
 
     const isLoading = form.formState.isSubmitting;
-    //CHALLENGE Create this form.
+
     return (
         <Card className="w-full">
             <CardHeader>

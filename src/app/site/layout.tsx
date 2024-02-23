@@ -8,7 +8,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <Navigation />
             <main className="h-full">
-                {children}{" "}
+                {children}
                 <footer className="flex h-[300px] w-full mt-40 justify-center items-center bg-primary/10">
                     Footer
                 </footer>

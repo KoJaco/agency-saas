@@ -18,20 +18,20 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <ThemeProvider
-                attribute="class"
-                defaultTheme="dark"
-                enableSystem
-                disableTransitionOnChange
-            >
-                <ModalProvider>
-                    <body className={inter.className}>
+        <html lang="en" suppressHydrationWarning={true}>
+            <body className={inter.className}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <ModalProvider>
                         {children} <Toaster />
                         <SonnarToaster position="bottom-left" />
-                    </body>
-                </ModalProvider>
-            </ThemeProvider>
+                    </ModalProvider>
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

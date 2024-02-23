@@ -36,14 +36,8 @@ export default async function Home() {
     ];
     return (
         <div className="space-y-40">
-            <section className="h-full w-full md:pt-44 relative flex items-center justify-center flex-col ">
-                {/* grid */}
-
-                <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-
-                {/* <div className="relative h-full w-full bg-slate-950">
-                    <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-                </div> */}
+            <section className="h-screen w-full md:pt-44 relative flex items-center justify-center flex-col ">
+                {/* <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
 
                 <p className="text-center z-10">
                     Run your agency, in one place
@@ -62,11 +56,10 @@ export default async function Home() {
                         className="rounded-tl-2xl rounded-tr-2xl border-2 border-muted w-5/6"
                     />
                     <div className="bottom-0 top-[50%] bg-gradient-to-t dark:from-background left-0 right-0 absolute z-10"></div>
-                </div>
+                </div> */}
             </section>
             <section className="flex justify-center items-center flex-col gap-4">
-                <h2 className="text-4xl text-center">
-                    {" "}
+                {/* <h2 className="text-4xl text-center">
                     Choose what fits you right
                 </h2>
                 <p className="text-muted-foreground text-center">
@@ -125,7 +118,6 @@ export default async function Home() {
                         </CardFooter>
                     </Card>
                     {prices.map((card) => (
-                        //WIP: Wire up free product from stripe
                         <Card
                             key={card.nickname}
                             className={clsx(
@@ -192,7 +184,7 @@ export default async function Home() {
                             </CardFooter>
                         </Card>
                     ))}
-                </div>
+                </div> */}
             </section>
         </div>
     );

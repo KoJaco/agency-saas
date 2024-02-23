@@ -315,6 +315,7 @@ const MenuOptions = ({
                             <CommandInput placeholder="Search..." />
                             <CommandList className="py-4 overflow-y-hidden">
                                 <CommandEmpty>No Results Found</CommandEmpty>
+                                {/* User should be able to create whatever they want for sidebar items */}
                                 <CommandGroup className="w-full flex flex-col gap-y-2">
                                     {sidebarOpt.map((sidebarOptions) => {
                                         let val;
