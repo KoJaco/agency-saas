@@ -6,7 +6,7 @@ import {
     SubAccount,
     SubAccountSidebarOption,
 } from "@prisma/client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { ChevronsUpDown, Compass, Menu, PlusCircleIcon } from "lucide-react";
@@ -51,7 +51,7 @@ const MenuOptions = ({
     defaultOpen,
 }: MenuOptionsProps) => {
     const { setOpen } = useModal();
-    const [isMounted, setIsMounted] = useState(false);
+    const isMounted = useRef(false); // we don't want a re-render for checking mounted, useRef instead of state.
 
     const openState = useMemo(
         () => (defaultOpen ? { open: true } : {}),
@@ -59,10 +59,16 @@ const MenuOptions = ({
     );
 
     useEffect(() => {
-        setIsMounted(true);
+        isMounted.current = true;
+
+        return () => {
+            isMounted.current = false;
+        };
     }, []);
 
     if (!isMounted) return;
+
+    // TODO: restructure sidebar, don't really want the blur effect
 
     return (
         <Sheet modal={false} {...openState}>
@@ -271,20 +277,21 @@ const MenuOptions = ({
                                     <SheetClose>
                                         <Button
                                             className="w-full flex gap-2"
-                                            //   onClick={() => {
-                                            //     setOpen(
-                                            //       <CustomModal
-                                            //         title="Create A Subaccount"
-                                            //         subheading="You can switch between your agency account and the subaccount from the sidebar"
-                                            //       >
-                                            //         <SubAccountDetails
-                                            //           agencyDetails={user?.Agency as Agency}
-                                            //           userId={user?.id as string}
-                                            //           userName={user?.name}
-                                            //         />
-                                            //       </CustomModal>
-                                            //     )
-                                            //   }}
+                                            onClick={() => {
+                                                setOpen(
+                                                    <CustomModal
+                                                        title="Create A SubAccount"
+                                                        subheading="You can switch between your agency account and the subaccount from the sidebar."
+                                                    >
+                                                        <div></div>
+                                                        {/* <SubAccountDetails
+                                                      agencyDetails={user?.Agency as Agency}
+                                                      userId={user?.id as string}
+                                                      userName={user?.name}
+                                                    /> */}
+                                                    </CustomModal>
+                                                );
+                                            }}
                                         >
                                             <PlusCircleIcon size={15} />
                                             Create Sub Account

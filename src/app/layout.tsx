@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
-
+import ModalProvider from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnarToaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,12 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
             >
-                <body className={inter.className}>{children}</body>
+                <ModalProvider>
+                    <body className={inter.className}>
+                        {children} <Toaster />
+                        <SonnarToaster position="bottom-left" />
+                    </body>
+                </ModalProvider>
             </ThemeProvider>
         </html>
     );

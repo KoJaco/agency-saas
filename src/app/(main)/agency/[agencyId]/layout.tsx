@@ -15,6 +15,8 @@ type Props = {
     params: { agencyId: string };
 };
 
+// TODO: Do we really need blur page if we're restructuring sidebar?
+
 const layout = async ({ children, params }: Props) => {
     const agencyId = await verifyAndAcceptInvitation();
     const user = await currentUser();
@@ -34,8 +36,8 @@ const layout = async ({ children, params }: Props) => {
         return <Unauthorized />;
 
     let allNotifications: any = [];
-    //   const notifications = await getNotificationAndUser(agencyId)
-    //   if (notifications) allNotifications = notifications
+    const notifications = await getNotificationAndUser(agencyId);
+    if (notifications) allNotifications = notifications;
 
     return (
         <div className="h-screen overflow-hidden">
@@ -45,9 +47,9 @@ const layout = async ({ children, params }: Props) => {
                     notifications={allNotifications}
                     role={allNotifications.User?.role}
                 />
-                {/* <div className="relative">
+                <div className="relative">
                     <BlurPage>{children}</BlurPage>
-                </div> */}
+                </div>
             </div>
         </div>
     );
