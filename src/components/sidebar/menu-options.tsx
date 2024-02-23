@@ -26,7 +26,7 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useModal } from "@/providers/modal-provider";
 import CustomModal from "../global/custom-modal";
-// import SubAccountDetails from "../forms/subaccount-details";
+import SubAccountDetails from "../forms/subaccount-details";
 import { Separator } from "../ui/separator";
 import { icons } from "@/lib/constants";
 import { MoveRight } from "lucide-react";
@@ -283,12 +283,17 @@ const MenuOptions = ({
                                                         title="Create A SubAccount"
                                                         subheading="You can switch between your agency account and the subaccount from the sidebar."
                                                     >
-                                                        <div></div>
-                                                        {/* <SubAccountDetails
-                                                      agencyDetails={user?.Agency as Agency}
-                                                      userId={user?.id as string}
-                                                      userName={user?.name}
-                                                    /> */}
+                                                        <SubAccountDetails
+                                                            agencyDetails={
+                                                                user?.Agency as Agency
+                                                            }
+                                                            userId={
+                                                                user?.id as string
+                                                            }
+                                                            userName={
+                                                                user?.name
+                                                            }
+                                                        />
                                                     </CustomModal>
                                                 );
                                             }}
