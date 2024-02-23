@@ -48,7 +48,7 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
         <>
             <div
                 className={twMerge(
-                    "fixed z-[20] md:left-[300px] left-0 right-0 top-0 p-4 bg-background/80 backdrop-blur-md flex  gap-4 items-center border-b-[1px] ",
+                    "fixed z-[20] md:left-[300px] left-0 right-0 top-0 p-4 bg-background/80 backdrop-blur-md flex  gap-4 items-center border-b-[1px] overflow-y-auto",
                     className
                 )}
             >
@@ -67,7 +67,7 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
                                     {(role === "AGENCY_ADMIN" ||
                                         role === "AGENCY_OWNER") && (
                                         <Card className="flex items-center justify-between p-4">
-                                            Current Subaccount
+                                            Current SubAccount
                                             <Switch
                                                 onCheckedChange={handleClick}
                                             />
@@ -129,7 +129,7 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
                             ))}
                             {allNotifications?.length === 0 && (
                                 <div
-                                    className="flex items-center justify-center text-muted-foreground"
+                                    className="flex items-center justify-start text-muted-foreground"
                                     mb-4
                                 >
                                     You have no notifications

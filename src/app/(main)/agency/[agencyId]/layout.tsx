@@ -3,7 +3,7 @@ import InfoBar from "@/components/global/info-bar";
 import Sidebar from "@/components/sidebar";
 import Unauthorized from "@/components/unauthorized";
 import {
-    //   getNotificationAndUser,
+    getNotificationAndUser,
     verifyAndAcceptInvitation,
 } from "@/lib/queries";
 import { currentUser } from "@clerk/nextjs";
@@ -40,14 +40,14 @@ const layout = async ({ children, params }: Props) => {
     return (
         <div className="h-screen overflow-hidden">
             <Sidebar id={params.agencyId} type="agency" />
-            <div className="md:pl-[300px]">
-                {/* <InfoBar
-          notifications={allNotifications}
-          role={allNotifications.User?.role}
-        />
-        <div className="relative">
-          <BlurPage>{children}</BlurPage>
-        </div> */}
+            <div className="md:pl-[300px] overflow-y-hidden">
+                <InfoBar
+                    notifications={allNotifications}
+                    role={allNotifications.User?.role}
+                />
+                {/* <div className="relative">
+                    <BlurPage>{children}</BlurPage>
+                </div> */}
             </div>
         </div>
     );
