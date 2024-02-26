@@ -37,7 +37,7 @@ const AgencySettings = async ({ params }: Props) => {
     // TODO: Maybe add toggle tabs between agency and user details on desktop, slightly better UX.
 
     return (
-        <div className="flex ld:!flex-row flex-col gap-4">
+        <div className="flex 2xl:flex-row flex-col gap-4">
             <UserDetails
                 type="agency"
                 id={params.agencyId}

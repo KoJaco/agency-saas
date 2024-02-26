@@ -135,6 +135,8 @@ const AgencyDetails = ({ data }: Props) => {
         try {
             let newUserData;
             let custId;
+            let updating = false;
+
             if (!data?.id) {
                 // const bodyData = {
                 //     email: values.companyEmail,
@@ -172,6 +174,10 @@ const AgencyDetails = ({ data }: Props) => {
                 // custId = customerData.customerId;
             }
 
+            if (data && data.id) {
+                updating = true;
+            }
+
             newUserData = await initUser({ role: "AGENCY_OWNER" });
             // if (!data?.customerId && !custId) return;
 
@@ -194,10 +200,18 @@ const AgencyDetails = ({ data }: Props) => {
                 goal: 5,
             });
 
-            // TODO: add distinction between creating an agency and updated an agency for toast
-            toast({
-                title: "Created Agency",
-            });
+            // TODO: add distinction between creating an agency and updating an agency for toast
+
+            if (updating) {
+                toast({
+                    title: `Updated agency '${data?.name}'`,
+                });
+            } else {
+                toast({
+                    title: `Created Agency '${data?.name}'`,
+                });
+            }
+
             console.log(response);
             if (data?.id) return router.refresh();
             if (response) {
@@ -215,7 +229,7 @@ const AgencyDetails = ({ data }: Props) => {
 
     return (
         <AlertDialog>
-            <Card>
+            <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Agency Information</CardTitle>
                     <CardDescription>
