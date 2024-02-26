@@ -488,3 +488,43 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
 
     return response;
 };
+
+// TODO: is it worth adding another func to update multiple?
+export const changeUserPermissions = async (
+    permissionId: string | undefined,
+    userEmail: string,
+    subAccountId: string,
+    permission: boolean
+) => {
+    try {
+        const response = await db.permissions.upsert({
+            where: { id: permissionId },
+            update: { access: permission },
+            create: {
+                access: permission,
+                email: userEmail,
+                subAccountId: subAccountId,
+            },
+        });
+
+        return response;
+    } catch (error) {
+        // TODO: Proper error reporting
+        console.log("Could not change permission!", error);
+    }
+};
+
+export const updateUser = async (user: Partial<User>) => {
+    const response = await db.user.update({
+        where: { email: user.email },
+        data: { ...user },
+    });
+
+    await clerkClient.users.updateUserMetadata(response.id, {
+        privateMetadata: {
+            role: user.role || "SUBACCOUNT_USER",
+        },
+    });
+
+    return response;
+};

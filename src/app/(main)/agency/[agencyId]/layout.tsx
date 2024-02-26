@@ -40,16 +40,17 @@ const layout = async ({ children, params }: Props) => {
     if (notifications) allNotifications = notifications;
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-auto min-h-screen overflow-hidden">
             <Sidebar id={params.agencyId} type="agency" />
-            <div className="md:pl-[300px] overflow-y-hidden">
+            <div className="md:pl-[300px] flex justify-center">
                 <InfoBar
                     notifications={allNotifications}
                     role={allNotifications.User?.role}
                 />
-                <div className="relative">
+                {/* <div className="relative">
                     <BlurPage>{children}</BlurPage>
-                </div>
+                </div> */}
+                <div className="static mt-24 mb-8 w-[95%]">{children}</div>
             </div>
         </div>
     );

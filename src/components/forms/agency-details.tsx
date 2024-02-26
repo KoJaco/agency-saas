@@ -193,6 +193,8 @@ const AgencyDetails = ({ data }: Props) => {
                 connectAccountId: "",
                 goal: 5,
             });
+
+            // TODO: add distinction between creating an agency and updated an agency for toast
             toast({
                 title: "Created Agency",
             });
@@ -437,7 +439,7 @@ const AgencyDetails = ({ data }: Props) => {
                                     <FormDescription>
                                         ✨ Create a goal for your agency. As
                                         your business grows your goals grow too
-                                        so don&&apos;t forget to set the bar
+                                        so don&apos;t forget to set the bar
                                         higher!
                                     </FormDescription>
                                     <NumberInput
@@ -475,7 +477,7 @@ const AgencyDetails = ({ data }: Props) => {
                         <div className="flex flex-col items-start justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
                             <div>Danger!</div>
                             <div className="text-muted-foreground">
-                                Deleting your agency cannpt be undone. This will
+                                Deleting your agency cannot be undone. This will
                                 also delete all sub accounts and all data
                                 related to your sub accounts. Sub accounts will
                                 no longer have access to funnels, contacts etc.

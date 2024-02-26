@@ -92,7 +92,7 @@ const MenuOptions = ({
                     }
                 )}
             >
-                <div className="flex flex-col">
+                <div className="flex flex-col relative w-full">
                     <AspectRatio ratio={16 / 5}>
                         <Image
                             src={sidebarLogo}
@@ -124,12 +124,11 @@ const MenuOptions = ({
                                 </div>
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[300px] h-96 mt-4 z-[200]">
+                        <PopoverContent className="h-96 mt-2 z-[200] w-[90vw] sm:w-[340px] md:w-[250px]">
                             <Command className="rounded-lg">
                                 <CommandInput placeholder="Search Accounts..." />
                                 <CommandList className="pb-16">
                                     <CommandEmpty>
-                                        {" "}
                                         No results found
                                     </CommandEmpty>
                                     {(user?.role === "AGENCY_OWNER" ||
@@ -310,7 +309,7 @@ const MenuOptions = ({
                         MENU LINKS
                     </p>
                     <Separator className="mb-4" />
-                    <nav className="relative flex flex-col w-[250px] overflow-y-hidden">
+                    <nav className="relative flex flex-col w-full overflow-y-hidden">
                         <Command className="rounded-sm bg-transparent">
                             <CommandInput placeholder="Search..." />
                             <CommandList className="py-4 overflow-y-hidden">
@@ -330,17 +329,16 @@ const MenuOptions = ({
                                         return (
                                             <CommandItem
                                                 key={sidebarOptions.id}
-                                                className="md:w-[250px] w-full"
+                                                className="w-full"
                                             >
                                                 <Link
                                                     href={sidebarOptions.link}
-                                                    className="flex items-center gap-3 py-1 hover:bg-transparent text-foreground rounded-sm transition-all md:w-full w-[300px] group"
+                                                    className="flex items-center gap-3 py-1 hover:bg-transparent text-foreground rounded-sm transition-all md:w-full w-[300px] group "
                                                 >
                                                     {val}
-                                                    <span>
+                                                    <span className="dark:text-foreground group-hover:text-white transition-colors duration-300">
                                                         {sidebarOptions.name}
                                                     </span>
-                                                    <MoveRight className="ml-auto w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                                 </Link>
                                             </CommandItem>
                                         );
