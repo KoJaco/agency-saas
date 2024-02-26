@@ -39,6 +39,9 @@ const layout = async ({ children, params }: Props) => {
     const notifications = await getNotificationAndUser(agencyId);
     if (notifications) allNotifications = notifications;
 
+    // TODO: Change styling to match Clerk dashboard, inverse card for content basically.
+    // TODO: for settings, add Clerk general/danger tabs for settings... I like this.
+
     return (
         <div className="h-auto min-h-screen overflow-hidden">
             <Sidebar id={params.agencyId} type="agency" />

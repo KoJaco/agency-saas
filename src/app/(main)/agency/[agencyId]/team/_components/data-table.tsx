@@ -49,7 +49,7 @@ export function DataTable<TData, TValue>({
                 <div className="flex items-center py-4 gap-2">
                     <Search />
                     <Input
-                        placeholder="Search Name..."
+                        placeholder="Search by Name..."
                         value={
                             (table
                                 .getColumn(filterValue)
@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
                                 .getColumn(filterValue)
                                 ?.setFilterValue(event.target.value);
                         }}
-                        className="h-12"
+                        className="py-2 px-4 rounded-full min-w-[280px] w-full"
                     />
                 </div>
                 <Button
