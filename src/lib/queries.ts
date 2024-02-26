@@ -2,7 +2,7 @@
 import { clerkClient, currentUser } from "@clerk/nextjs";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, Plan, SubAccount, User } from "@prisma/client";
+import { Agency, Plan, Role, SubAccount, User } from "@prisma/client";
 import { CreateMediaType } from "./types";
 import { v4 } from "uuid";
 // server actions file
@@ -544,6 +544,55 @@ export async function getSubaccountDetails(subaccountId: string) {
             id: subaccountId,
         },
     });
+
+    return response;
+}
+
+export async function getUser(userId: string) {
+    const response = await db.user.findUnique({
+        where: {
+            id: userId,
+        },
+    });
+
+    return response;
+}
+
+export async function deleteUser(userId: string) {
+    await clerkClient.users.updateUserMetadata(userId, {
+        privateMetadata: {
+            role: undefined,
+        },
+    });
+
+    const response = await db.user.delete({ where: { id: userId } });
+
+    return response;
+}
+
+export async function sendInvitation(
+    role: Role,
+    email: string,
+    agencyId: string
+) {
+    const response = await db.invitation.create({
+        data: { email, agencyId, role },
+    });
+
+    try {
+        const invitation = await clerkClient.invitations.createInvitation({
+            emailAddress: email,
+            redirectUrl: process.env.NEXT_PUBLIC_URL,
+            publicMetadata: {
+                throughInvitation: true,
+                role,
+            },
+        });
+    } catch (error) {
+        // TODO: proper error handling
+        console.log(error);
+        throw error;
+    }
 
     return response;
 }
