@@ -528,3 +528,22 @@ export const updateUser = async (user: Partial<User>) => {
 
     return response;
 };
+
+export async function deleteSubAccount(subaccountId: string) {
+    const response = await db.subAccount.delete({
+        where: {
+            id: subaccountId,
+        },
+    });
+    return response;
+}
+
+export async function getSubaccountDetails(subaccountId: string) {
+    const response = await db.subAccount.findUnique({
+        where: {
+            id: subaccountId,
+        },
+    });
+
+    return response;
+}
